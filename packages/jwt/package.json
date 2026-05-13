@@ -1,6 +1,7 @@
 {
   "name": "@react-enterprise-rbac/jwt",
-  "version": "0.1.0-alpha",
+  "version": "0.1.2-alpha",
+  "license": "MIT",
   "description": "JWT parser for RBAC and scopes",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

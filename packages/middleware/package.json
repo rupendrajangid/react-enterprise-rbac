@@ -1,6 +1,7 @@
 {
   "name": "@react-enterprise-rbac/middleware",
-  "version": "0.1.0-alpha",
+  "version": "0.1.2-alpha",
+  "license": "MIT",
   "description": "Server-side middleware for RBAC",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

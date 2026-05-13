@@ -1,6 +1,7 @@
 {
   "name": "@react-enterprise-rbac/react",
-  "version": "0.1.0-alpha",
+  "version": "0.1.2-alpha",
+  "license": "MIT",
   "description": "React components and hooks for enterprise RBAC",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

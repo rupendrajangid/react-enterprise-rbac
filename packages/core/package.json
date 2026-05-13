@@ -1,6 +1,7 @@
 {
   "name": "@react-enterprise-rbac/core",
-  "version": "0.1.0-alpha",
+  "version": "0.1.2-alpha",
+  "license": "MIT",
   "description": "Core RBAC and hierarchical scope engine",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
