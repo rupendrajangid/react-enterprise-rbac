@@ -15,8 +15,8 @@
   <a href="https://www.npmjs.com/package/@react-enterprise-rbac/react">
     <img src="https://img.shields.io/npm/v/@react-enterprise-rbac/react?color=brightgreen" alt="NPM Version" />
   </a>
-  <a href="https://www.npmjs.com/package/@react-enterprise-rbac/react">
-    <img src="https://img.shields.io/npm/l/@react-enterprise-rbac/react" alt="License" />
+  <a href="https://github.com/rupendrajangid/react-enterprise-rbac/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/rupendrajangid/react-enterprise-rbac" alt="License" />
   </a>
   <img src="https://img.shields.io/badge/TypeScript-Ready-blue" alt="TypeScript" />
   <img src="https://img.shields.io/badge/React-18%2B-61DAFB" alt="React" />
