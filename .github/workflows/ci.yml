@@ -21,10 +21,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
 
       - name: Install dependencies
-        run: npm install
+        # Force fresh resolution on Linux to fix Rollup's optional native dependency bug
+        # which occurs when the lockfile was generated on Windows.
+        run: |
+          rm -f package-lock.json
+          npm install
 
       - name: Build packages
         run: npx turbo run build
