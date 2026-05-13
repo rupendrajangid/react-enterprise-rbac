@@ -9,7 +9,7 @@
     "apps/*"
   ],
   "scripts": {
-    "build": "npm run build --workspace=packages/core --workspace=packages/react --workspace=packages/jwt --workspace=packages/middleware",
+    "build": "turbo run build --filter=@react-enterprise-rbac/*",
     "dev": "turbo run dev",
     "test": "vitest run",
     "lint": "eslint . --ext .ts,.tsx",
