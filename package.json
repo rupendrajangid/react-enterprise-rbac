@@ -1,0 +1,36 @@
+{
+  "name": "react-enterprise-rbac",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Enterprise-grade RBAC + hierarchical scope access control library for React",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=packages/core --workspace=packages/react --workspace=packages/jwt --workspace=packages/middleware",
+    "dev": "turbo run dev",
+    "test": "vitest",
+    "lint": "eslint . --ext .ts,.tsx",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+    "prepare": "husky install",
+    "storybook": "npm run storybook --workspace=apps/demo"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.59.3",
+    "@typescript-eslint/parser": "^8.59.3",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react": "^7.37.5",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "tsup": "^8.0.2",
+    "turbo": "^1.12.4",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.2"
+  },
+  "overrides": {
+    "vite": "^5.4.0",
+    "@vitejs/plugin-react": "^4.3.0"
+  }
+}
