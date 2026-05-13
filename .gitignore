@@ -16,7 +16,6 @@ build/
 .env.*.local
 
 # CI/CD & Tooling
-/.github/
 /.husky/
 .eslintcache
 

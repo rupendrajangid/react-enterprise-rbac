@@ -1,141 +1,79 @@
 # react-enterprise-rbac
 
 <p align="center">
-  <strong>Enterprise-grade hierarchical RBAC & scope authorization framework for React & TypeScript applications.</strong>
+  <strong>The Ultimate Enterprise Authorization Framework for React & TypeScript.</strong>
 </p>
 
 <p align="center">
-  Built for modern enterprise systems with multi-tenant access control, hierarchical scope inheritance, JWT integration, and type-safe developer experience.
+  Built to solve complex hierarchical access control, multi-tenant security, and type-safe permission management in modern enterprise applications.
 </p>
 
 <p align="center">
-
-![CI](https://github.com/rupendrajangid/react-enterprise-rbac/actions/workflows/ci.yml/badge.svg)
-![npm](https://img.shields.io/npm/v/@react-enterprise-rbac/react)
-![License](https://img.shields.io/npm/l/@react-enterprise-rbac/react)
-![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue)
-![React](https://img.shields.io/badge/React-18+-61DAFB)
-
+  <a href="https://github.com/rupendrajangid/react-enterprise-rbac/actions/workflows/ci.yml">
+    <img src="https://github.com/rupendrajangid/react-enterprise-rbac/actions/workflows/ci.yml/badge.svg" alt="CI Status" />
+  </a>
+  <a href="https://www.npmjs.com/package/@react-enterprise-rbac/react">
+    <img src="https://img.shields.io/npm/v/@react-enterprise-rbac/react?color=brightgreen" alt="NPM Version" />
+  </a>
+  <a href="https://www.npmjs.com/package/@react-enterprise-rbac/react">
+    <img src="https://img.shields.io/npm/l/@react-enterprise-rbac/react" alt="License" />
+  </a>
+  <img src="https://img.shields.io/badge/TypeScript-Ready-blue" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/React-18%2B-61DAFB" alt="React" />
 </p>
 
 ---
 
-# ✨ Why react-enterprise-rbac?
+## ✨ Why react-enterprise-rbac?
 
-Most RBAC libraries focus only on flat role-based permissions.
+Enterprise applications don't just need "Admin" vs "User". They need to manage access across **Organizations**, **Regions**, **Sites**, and **Departments**, often with permissions that flow downward through the hierarchy.
 
-Enterprise applications require significantly more advanced authorization models involving:
-
-* Hierarchical scope inheritance
-* Multi-tenant access control
-* Region/Area/Site-level permissions
-* Declarative UI authorization
-* Type-safe developer experience
-* Dynamic permission resolution
-* Enterprise workflow authorization
-
-react-enterprise-rbac was built specifically to solve these enterprise authorization challenges for modern React and TypeScript applications.
+`react-enterprise-rbac` provides a production-grade, generic-first engine that handles:
+* **Hierarchical Scope Inheritance**: Permissions granted at a "Region" level automatically cascade to child "Sites" and "Departments".
+* **Wildcard Permission Matching**: Use `task.*` to grant all task-related permissions with a single string.
+* **Strict Type Safety**: Full TypeScript generic support ensures your custom permission enums are enforced at compile-time.
+* **Multi-Tenant Ready**: Designed from the ground up for SaaS and multi-organization enterprise systems.
 
 ---
 
-# 🚀 Key Features
+## 📦 Monorepo Packages
 
-## 🔐 Enterprise Authorization
+This framework is split into specialized, tree-shakable packages to keep your bundle light:
 
-* Hierarchical scope inheritance
-* Multi-organization authorization
-* Downward permission propagation
-* Scope-aware access control
-* Wildcard permission matching
-* Route-level protection
-
----
-
-## ⚡ Developer Experience
-
-* TypeScript-first APIs
-* Full generic type support
-* Autocompletion for permissions
-* Declarative React components
-* Simple hook-based API
-* Tree-shakable architecture
+| Package | Purpose |
+| :--- | :--- |
+| [`@react-enterprise-rbac/core`](./packages/core) | The foundational authorization and hierarchy engine. |
+| [`@react-enterprise-rbac/react`](./packages/react) | Providers, hooks, and declarative UI guards for React. |
+| [`@react-enterprise-rbac/jwt`](./packages/jwt) | Bridge for extracting permissions and scopes from standard JWT tokens. |
+| [`@react-enterprise-rbac/middleware`](./packages/middleware) | Server-side authorization helpers for Node.js backends. |
 
 ---
 
-## 🧩 React Integration
+## 🚀 Quick Start
 
-* `<Can />`
-* `<Cannot />`
-* `<ScopeGuard />`
-* `<RoleGuard />`
-* `<ProtectedRoute />`
-* `usePermission()`
-* `useScopeAccess()`
-
----
-
-## 🔑 JWT Support
-
-* JWT role parsing
-* Scope extraction
-* Permission decoding
-* Auth token helpers
-
----
-
-# 🏢 Hierarchical Scope Authorization
-
-react-enterprise-rbac supports enterprise-grade hierarchical authorization structures.
-
-```text
-Organization
- ├── Region
- │    ├── Area
- │    │    ├── Site
- │    │    │    ├── Department
-```
-
-Permissions inherit downward automatically.
-
-### Example
-
-* Region Manager → Access all Areas & Sites within Region
-* Site Manager → Access only assigned Site
-* Auditor → Read-only access across hierarchy
-
----
-
-# 📦 Installation
+### 1. Installation
 
 ```bash
 npm install @react-enterprise-rbac/react @react-enterprise-rbac/core
 ```
 
-or
+### 2. Define Your Permissions (Optional but Recommended)
 
-```bash
-yarn add @react-enterprise-rbac/react @react-enterprise-rbac/core
+```typescript
+type MyPermissions = 'user.view' | 'user.edit' | 'report.*' | 'admin.panel';
 ```
 
----
-
-# 🚀 Quick Start
-
-## 1. Setup the Provider
+### 3. Wrap Your Application
 
 ```tsx
 import { RBACProvider } from '@react-enterprise-rbac/react';
 
 const user = {
-  id: 'user-123',
+  id: 'u-123',
   roles: ['manager'],
-  permissions: ['dashboard.view'],
+  permissions: ['user.view'], // Direct permissions
   scopes: [
-    {
-      type: 'region',
-      id: 'mumbai',
-      permissions: ['task.*']
-    }
+    { type: 'region', id: 'north-america', permissions: ['report.*'] } // Scoped permissions
   ]
 };
 
@@ -148,9 +86,7 @@ function App() {
 }
 ```
 
----
-
-## 2. Guard Your UI
+### 4. Guard Your UI
 
 ```tsx
 import { Can, ScopeGuard } from '@react-enterprise-rbac/react';
@@ -158,16 +94,18 @@ import { Can, ScopeGuard } from '@react-enterprise-rbac/react';
 function Dashboard() {
   return (
     <div>
-      <Can permission="dashboard.view">
-        <h1>Welcome to the Command Center</h1>
+      {/* Direct permission check */}
+      <Can<MyPermissions> permission="user.view">
+        <UserList />
       </Can>
 
-      <ScopeGuard
-        scope="region"
-        scopeId="mumbai"
-        permission="task.create"
+      {/* Hierarchical scope check (inherited downward) */}
+      <ScopeGuard<MyPermissions> 
+        scope="site" 
+        scopeId="NYC-01" 
+        permission="report.view"
       >
-        <button>Create Task in Mumbai</button>
+        <SiteReport />
       </ScopeGuard>
     </div>
   );
@@ -176,183 +114,73 @@ function Dashboard() {
 
 ---
 
-# 🧠 Type-Safe Permissions
+## 🏢 Hierarchical Resolution Engine
 
-Define strongly typed permission schemas with full autocompletion support.
+The engine resolves access based on a numeric hierarchy level system.
 
-```ts
-type Permissions =
-  | "task.create"
-  | "task.edit"
-  | "task.delete";
-
-const { can } = usePermission<Permissions>();
-
-can("task.create");
+```mermaid
+graph TD
+    ORG[Organization: Level 1] --> REG[Region: Level 2]
+    REG --> AREA[Area: Level 3]
+    AREA --> SITE[Site: Level 4]
+    SITE --> DEPT[Department: Level 5]
 ```
 
-Invalid permissions are caught at compile-time.
+Permissions granted at **Region (Level 2)** are automatically recognized when checking for access at **Site (Level 4)**, provided the Site belongs to that Region.
 
 ---
 
-# ⚡ Wildcard Permission Matching
+## 🧪 Development & Testing
 
-Supports flexible wildcard authorization patterns.
-
-```ts
-can("task.*");
-can("admin.*");
-```
-
----
-
-# 🔑 JWT Integration
-
-Extract roles, permissions, and scopes directly from JWT tokens.
-
-```ts
-import { parseRBACJwt } from "@react-enterprise-rbac/jwt";
-
-const auth = parseRBACJwt(token);
-```
-
-Example JWT Payload:
-
-```json
-{
-  "role": "manager",
-  "permissions": ["task.create"],
-  "scopes": ["region:mumbai"]
-}
-```
-
----
-
-# 🛡️ Available Components
-
-| Component            | Description                              |
-| -------------------- | ---------------------------------------- |
-| `<Can />`            | Render content when permission exists    |
-| `<Cannot />`         | Render content when permission is denied |
-| `<ScopeGuard />`     | Restrict rendering by scope              |
-| `<RoleGuard />`      | Restrict rendering by role               |
-| `<ProtectedRoute />` | Route-level authorization                |
-
----
-
-# 🪝 Available Hooks
-
-| Hook               | Description                |
-| ------------------ | -------------------------- |
-| `usePermission()`  | Permission checking        |
-| `useScopeAccess()` | Scope-aware access control |
-| `useCurrentUser()` | Current authenticated user |
-| `useRBAC()`        | Full RBAC engine access    |
-
----
-
-# 🏗️ Monorepo Architecture
-
-```text
-react-enterprise-rbac/
-├── docs/
-│   ├── architecture.md
-│   └── getting-started.md
-├── packages/
-│   ├── core/
-│   ├── react/
-│   ├── jwt/
-│   └── middleware/
-├── apps/
-│   └── demo/
-└── README.md
-```
-
----
-
-# ⚙️ Tech Stack
-
-* React
-* TypeScript
-* Turborepo
-* tsup
-* Vitest
-* ESLint
-* Prettier
-* Husky
-* GitHub Actions
-
----
-
-# 🧪 Development
-
-## Install Dependencies
+We maintain high standards for code quality and stability.
 
 ```bash
+# Install dependencies
 npm install
-```
 
-## Build Packages
-
-```bash
+# Run type-safe builds across all packages
 npm run build
-```
 
-## Run Demo App
-
-```bash
-npm run dev --workspace=apps/demo
-```
-
-## Run Tests
-
-```bash
+# Run unit tests for the core engine
 npm run test
+
+# Lint the entire codebase
+npm run lint
 ```
 
 ---
 
-# 🏢 Primary Use Cases
+## 🗺️ Roadmap
 
-* Enterprise Dashboards
-* Manufacturing Systems (MES)
-* ERP Platforms
-* Workflow Management Systems
-* SaaS Multi-tenant Applications
-* Multi-location Access Control
-* Enterprise Admin Panels
-
----
-
-# 🗺️ Roadmap
-
-## Upcoming Features
-
-* [ ] Attribute-Based Access Control (ABAC)
-* [ ] Permission visualizer
-* [ ] Audit logs
-* [ ] Backend adapters
-* [ ] NestJS integration
-* [ ] Next.js middleware
-* [ ] Graph-based hierarchy engine
-* [ ] Developer Devtools
+- [x] Hierarchical Scope Inheritance
+- [x] Wildcard Matching
+- [x] Generic Type Support
+- [x] JWT Integration Utilities
+- [ ] **Next**: Attribute-Based Access Control (ABAC)
+- [ ] **Next**: Permission Visualizer DevTools
+- [ ] **Future**: Native Next.js App Router Middleware
+- [ ] **Future**: Audit Logging Adapters
 
 ---
 
-# 🤝 Contributing
+## 🤝 Contributing
 
-Contributions are welcome.
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-Please read the upcoming `CONTRIBUTING.md` guide before submitting pull requests.
-
----
-
-# 📄 License
-
-MIT © Rupendra Kumar Jangid
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ---
 
-# ❤️ Built for Enterprise React Applications
+## 📄 License
 
-If this project helps you, consider starring the repository and contributing to the ecosystem.
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+<p align="center">
+  Built with ❤️ for the Enterprise React Ecosystem.
+</p>
