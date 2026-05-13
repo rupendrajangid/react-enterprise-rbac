@@ -29,4 +29,8 @@ jobs:
           npm install -D @rollup/rollup-linux-x64-gnu
 
       - name: Build packages
-        run: npx turbo run build
+        # Only build the core library packages for CI status
+        run: npx turbo run build --filter="./packages/*"
+
+      - name: Run tests
+        run: npm run test
