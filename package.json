@@ -3,13 +3,14 @@
   "version": "0.1.2-alpha",
   "license": "MIT",
   "private": true,
+  "packageManager": "npm@10.9.0",
   "description": "Enterprise-grade RBAC + hierarchical scope access control library for React",
   "workspaces": [
     "packages/*",
     "apps/*"
   ],
   "scripts": {
-    "build": "turbo run build --filter=@react-enterprise-rbac/*",
+    "build": "turbo run build",
     "dev": "turbo run dev",
     "test": "vitest run",
     "lint": "eslint . --ext .ts,.tsx",
