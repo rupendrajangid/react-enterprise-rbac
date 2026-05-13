@@ -1,6 +1,6 @@
 {
   "name": "@react-enterprise-rbac/middleware",
-  "version": "1.0.0",
+  "version": "0.1.0-alpha",
   "description": "Server-side middleware for RBAC",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -16,5 +16,8 @@
     "tsup": "^8.0.2",
     "typescript": "^5.3.3",
     "vitest": "^1.2.2"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }

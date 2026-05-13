@@ -1,6 +1,6 @@
 {
   "name": "react-enterprise-rbac",
-  "version": "1.0.0",
+  "version": "0.1.0-alpha",
   "private": true,
   "description": "Enterprise-grade RBAC + hierarchical scope access control library for React",
   "workspaces": [

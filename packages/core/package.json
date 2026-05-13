@@ -1,6 +1,6 @@
 {
   "name": "@react-enterprise-rbac/core",
-  "version": "1.0.0",
+  "version": "0.1.0-alpha",
   "description": "Core RBAC and hierarchical scope engine",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -17,5 +17,8 @@
     "tsup": "^8.0.2",
     "typescript": "^5.3.3",
     "vitest": "^1.2.2"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
