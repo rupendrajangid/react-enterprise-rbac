@@ -1,11 +1,12 @@
-import React from 'react';
-import { useRBAC } from '../context/RBACContext';
-import { ScopeType } from '@react-enterprise-rbac/core';
+import { ScopeType, AccessContext } from '@react-enterprise-rbac/core';
+
 
 interface GuardProps {
   children: React.ReactNode;
   fallback?: React.ReactNode;
+  context?: AccessContext;
 }
+
 
 interface CanProps<P extends string = string> extends GuardProps {
   permission: P;
@@ -14,20 +15,24 @@ interface CanProps<P extends string = string> extends GuardProps {
 export const Can = <P extends string = string>({ 
   permission, 
   children, 
-  fallback = null 
+  fallback = null,
+  context
 }: CanProps<P>) => {
   const { can } = useRBAC<P>();
-  return can(permission) ? <>{children}</> : <>{fallback}</>;
+  return can(permission, context) ? <>{children}</> : <>{fallback}</>;
 };
+
 
 export const Cannot = <P extends string = string>({ 
   permission, 
   children, 
-  fallback = null 
+  fallback = null,
+  context
 }: CanProps<P>) => {
   const { can } = useRBAC<P>();
-  return !can(permission) ? <>{children}</> : <>{fallback}</>;
+  return !can(permission, context) ? <>{children}</> : <>{fallback}</>;
 };
+
 
 interface ScopeGuardProps<P extends string = string> extends GuardProps {
   scope: ScopeType;
@@ -40,11 +45,13 @@ export const ScopeGuard = <P extends string = string>({
   scopeId, 
   permission, 
   children, 
-  fallback = null 
+  fallback = null,
+  context
 }: ScopeGuardProps<P>) => {
   const { canAccess } = useRBAC<P>();
-  return canAccess({ scope, scopeId, permission }) ? <>{children}</> : <>{fallback}</>;
+  return canAccess({ scope, scopeId, permission, context }) ? <>{children}</> : <>{fallback}</>;
 };
+
 
 interface RoleGuardProps extends GuardProps {
   role: string | string[];

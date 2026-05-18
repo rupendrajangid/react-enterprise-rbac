@@ -1,13 +1,14 @@
-import React, { createContext, useContext, useMemo } from 'react';
-import { User, createPermissionEngine, PermissionEngine, AccessRequest } from '@react-enterprise-rbac/core';
+import { User, createPermissionEngine, PermissionEngine, AccessRequest, AccessContext } from '@react-enterprise-rbac/core';
+
 
 interface RBACContextValue<P extends string = string> {
   user: User<P> | null;
   engine: PermissionEngine<P>;
-  can: (permission: P) => boolean;
+  can: (permission: P, context?: AccessContext) => boolean;
   canAccess: (request: AccessRequest<P>) => boolean;
   isLoading?: boolean;
 }
+
 
 const RBACContext = createContext<RBACContextValue<any> | undefined>(undefined);
 
@@ -29,10 +30,11 @@ export const RBACProvider = <P extends string = string>({
   const value = useMemo(() => ({
     user,
     engine,
-    can: (permission: P) => user ? engine.can(user, permission) : false,
+    can: (permission: P, context?: AccessContext) => user ? engine.can(user, permission, context) : false,
     canAccess: (request: AccessRequest<P>) => user ? engine.canAccess(user, request) : false,
     isLoading
   }), [user, engine, isLoading]);
+
 
   return <RBACContext.Provider value={value}>{children}</RBACContext.Provider>;
 };
